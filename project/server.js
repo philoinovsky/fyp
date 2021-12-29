@@ -11,7 +11,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.use('/', express.static('public_static'));
+// set engine
+app.set('view engine', 'pug');
+app.set('views','./template');
+
+app.use('/static', express.static('public_static'));
+
+// index page
+app.get('/', (req, res) => {
+  res.render("index");
+});
 
 app.get('/getAccounts', (req, res) => {
   console.log("**** GET /getAccounts ****");
@@ -49,11 +58,11 @@ app.post('/sendCoin', (req, res) => {
   });
 });
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
 
   // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
   truffle_connect.web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:9545"));
 
-  console.log("Express Listening at http://localhost:" + port);
+  console.log("Express Listening at http://128.199.235.174:" + port);
 
 });
