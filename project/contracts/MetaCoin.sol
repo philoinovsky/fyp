@@ -1,4 +1,4 @@
-pragma solidity >=0.4.25 <0.6.0;
+pragma solidity >=0.5.16;
 
 import "./ConvertLib.sol";
 
@@ -13,7 +13,7 @@ contract MetaCoin {
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
 	constructor() public {
-		balances[tx.origin] = 10000;
+		balances[msg.sender] = 10000;
 	}
 
 	function sendCoin(address receiver, uint amount) public returns(bool sufficient) {
@@ -24,7 +24,7 @@ contract MetaCoin {
 		return true;
 	}
 
-	function getBalanceInEth(address addr) public view returns(uint){
+	function getBalanceInEth(address addr) public view returns(uint) {
 		return ConvertLib.convert(getBalance(addr),2);
 	}
 
