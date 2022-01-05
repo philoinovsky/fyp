@@ -4,6 +4,16 @@ const port = 3000 || process.env.PORT;
 const Web3 = require('web3');
 const truffle_connect = require('./connection/app.js');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+
+const log_and_throw = function(err)
+{
+  if (err)
+  {
+    console.log(err);
+    throw err;
+  }
+};
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -17,9 +27,31 @@ app.set('views','./template');
 
 app.use('/static', express.static('public_static'));
 
-// index page
-app.get('/', (req, res) => {
-  res.render("index");
+// database view
+app.get('/database.:address', (req, res) => {
+  fs.readFile('db/mapping.json', (err, data) => {
+    log_and_throw(err);
+    let account = JSON.parse(data);
+    let file_path = account[req.params.address]
+    fs.readFile(file_path, (err, data) => {
+      log_and_throw(err);
+      let user_data = JSON.parse(data);
+      res.render("database", user_data);
+    });
+  });
+});
+
+// database save
+app.post('/database.:address', (req, res) => {
+  fs.readFile('db/mapping.json', (err, data) => {
+    log_and_throw(err);
+    let account = JSON.parse(data);
+    let file_path = account[req.params.address]
+    let json_str = JSON.stringify(req.body);
+    fs.writeFile(file_path, json_str, () => {
+      res.redirect('/database.'+req.params.address);
+    });
+  });
 });
 
 app.get('/getAccounts', (req, res) => {

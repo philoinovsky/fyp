@@ -13,6 +13,7 @@ contract Data {
     data_path[msg.sender] = "user.json";
   }
 
+  // use current address
   function getDataPath(address addr) public view returns(string memory) {
     return data_path[addr];
   }

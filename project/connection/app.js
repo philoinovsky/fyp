@@ -3,6 +3,9 @@ const contract = require('truffle-contract');
 const metacoin_artifact = require('../build/contracts/MetaCoin.json');
 var MetaCoin = contract(metacoin_artifact);
 
+const data_artifact = require('../build/contracts/MetaCoin.json');
+var Data = contract(data_artifact);
+
 module.exports = {
   start: function(callback) {
     var self = this;
@@ -62,5 +65,8 @@ module.exports = {
       console.log(e);
       callback("ERROR 404");
     });
+  },
+  getPath: function(address) {
+    return Data.getDataPath(address);
   }
 }
