@@ -5,6 +5,17 @@ const Web3 = require('web3');
 const truffle_connect = require('./connection/app.js');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+var mysql = require('mysql');
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "root",
+  database: "posts"
+});
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 
 const log_and_throw = function(err)
 {
@@ -26,6 +37,15 @@ app.set('view engine', 'pug');
 app.set('views','./template');
 
 app.use('/static', express.static('public_static'));
+
+app.get('/', (req, res) => {
+  var sql = "SELECT * FROM data;"
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    res.render("index", {'posts': result});
+  });
+});
 
 // database view
 app.get('/database.:address', (req, res) => {
