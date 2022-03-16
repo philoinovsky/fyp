@@ -14,5 +14,5 @@ VALUES
 (
     0,
     NOW(), 
-    'test content'
+    'this is blog content'
 );

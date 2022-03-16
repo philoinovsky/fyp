@@ -4,8 +4,24 @@ include include/head.pug
 .container
   include include/navbar.pug
   h3 Blog
-    br
-    each post in posts
-        h4= post.user_id + '@' + post.time
-        p= post.content
+  br
+  .row
+  - for (var i = 0; i < posts.length; i += 2)
+    .row
+      .col
+        .card.flex-md-row.mb-4.box-shadow.h-md-250
+          .card-body.d-flex.flex-column.align-items-start
+            h3.mb-0 Title
+            .mb-1.text-muted= posts[i].time
+              i= ' by ' + posts[i].user
+            p.card-text.mb-auto
+              = posts[i].content
+      .col
+        .card.flex-md-row.mb-4.box-shadow.h-md-250
+          .card-body.d-flex.flex-column.align-items-start
+            h3.mb-0 Title
+            .mb-1.text-muted= posts[i+1].time
+              i= ' by ' + posts[i+1].user
+            p.card-text.mb-auto
+              = posts[i+1].content
 include include/scripts.pug

@@ -26,6 +26,19 @@ const log_and_throw = function(err)
   }
 };
 
+const getUserDataByID = function()
+{
+  var userData = new Map();
+  var account = JSON.parse(fs.readFileSync('db/mapping.json'));
+  for (var addr in account){
+    let value = account[addr];
+    let user_data = JSON.parse(fs.readFileSync(value));
+    user_data['account'] = addr;
+    userData.set(user_data['id'], user_data);
+  }
+  return userData;
+};
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -40,9 +53,14 @@ app.use('/static', express.static('public_static'));
 
 app.get('/', (req, res) => {
   var sql = "SELECT * FROM data;"
+  var userData = getUserDataByID();
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log(result);
+    result = result.map(function(e) {
+      e['user'] = userData.get(e['user_id'].toString())['username'];
+      e['time'] = e['time'].getFullYear() + '.' + (e['time'].getMonth() + 1) + '.' + e['time'].getDate();
+      return e;
+    });
     res.render("index", {'posts': result});
   });
 });
