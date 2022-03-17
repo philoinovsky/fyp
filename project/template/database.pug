@@ -8,18 +8,18 @@ include include/head.pug
     .form-group.row
       label.col-sm-3.col-form-label(for='id') id
       .col-sm-9
-        input#id.form-control-plaintext(type='text' readonly='' name="id" value= id)
+        input#id.form-control-plaintext(type='text' readonly='' name="id" value= data.id)
     .form-group.row
       label.col-sm-3.col-form-label(for='username') username
       .col-sm-9
-        input#username.form-control(type='text' name="username" value= username)
+        input#username.form-control(type='text' name="username" value= data.username)
     .form-group.row
       label.col-sm-3.col-form-label(for='data_entry_1') data_entry_1
       .col-sm-9
-        input#data_entry_1.form-control(type='text' name="data_entry_1" value= data_entry_1)
+        input#data_entry_1.form-control(type='text' name="data_entry_1" value= data.data_entry_1)
     .form-group.row
       label.col-sm-3.col-form-label(for='data_entry_2') data_entry_2
       .col-sm-9
-        input#data_entry_2.form-control(type='text' name="data_entry_2" value= data_entry_2)
+        input#data_entry_2.form-control(type='text' name="data_entry_2" value= data.data_entry_2)
     input.btn.btn-primary(type='submit' value="Submit")
 include include/scripts.pug

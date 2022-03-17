@@ -110,36 +110,36 @@ app.get('/wallet', (req, res) => {
 app.get('/chooseAccount.:addr', (req, res) => {
   console.log("**** GET /chooseAccount ****");
   curAcc = req.params.addr;
-  res.writeHead(301, {
-    Location: "/"
-  }).end();
+  res.redirect('/');
 });
 
 // database view
-app.get('/database.:address', (req, res) => {
+app.get('/database', (req, res) => {
   console.log("**** GET /database ****");
   fs.readFile('db/mapping.json', (err, data) => {
     log_and_throw(err);
     let account = JSON.parse(data);
-    let file_path = account[req.params.address]
+    let file_path = account[curAcc]
     fs.readFile(file_path, (err, data) => {
       log_and_throw(err);
       let user_data = JSON.parse(data);
-      res.render("database", user_data);
+      truffle_connect.start(function (accounts) {
+        res.render("database", {'nav': "db", 'acc': accounts, 'curAcc': curAcc, 'data': user_data});
+      });
     });
   });
 });
 
 // database save
-app.post('/database.:address', (req, res) => {
+app.post('/database', (req, res) => {
   console.log("**** POST /database ****");
   fs.readFile('db/mapping.json', (err, data) => {
     log_and_throw(err);
     let account = JSON.parse(data);
-    let file_path = account[req.params.address]
+    let file_path = account[curAcc]
     let json_str = JSON.stringify(req.body);
     fs.writeFile(file_path, json_str, () => {
-      res.redirect('/database.'+req.params.address);
+      res.redirect('/database');
     });
   });
 });
