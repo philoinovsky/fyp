@@ -1,0 +1,12 @@
+doctype html
+include include/head.pug
+
+.container
+  include include/navbar.pug
+  h2= post.title
+  .text-muted= post.time
+    i= ' by ' + post.user
+  img(src="static/image/" + post.image width="1100" height="400")
+  p= post.content
+            
+include include/scripts.pug

@@ -1,9 +1,11 @@
 CREATE TABLE data (
+    id int NOT NULL AUTO_INCREMENT,
     user_id INT,
     time TIMESTAMP,
     image VARCHAR(255),
     title VARCHAR(255),
-    content TEXT(65535)
+    content TEXT(65535),
+    PRIMARY KEY (id)
 );
 
 INSERT INTO data 

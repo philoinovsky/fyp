@@ -66,6 +66,19 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/post.:postid', (req, res) => {
+  var post_id = req.params.postid;
+  var sql = "SELECT * FROM data WHERE id = " + post_id + ";";
+  var userData = getUserDataByID();
+  con.query(sql, function (err, result) {
+    let post = result[0];
+    post['user'] = userData.get(post['user_id'].toString())['username'];
+    post['time'] = post['time'].getFullYear() + '.' + (post['time'].getMonth() + 1) + '.' + post['time'].getDate();
+    if (err) throw err;
+    res.render("post", {'post': post});
+  });
+});
+
 // database view
 app.get('/database.:address', (req, res) => {
   fs.readFile('db/mapping.json', (err, data) => {
