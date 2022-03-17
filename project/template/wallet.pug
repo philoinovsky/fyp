@@ -1,0 +1,28 @@
+doctype html
+include include/head.pug
+
+.container
+  include include/navbar.pug
+  h3 Wallet
+  br
+  .row
+  form
+    .form-group.row
+      label.col-sm-2.col-form-label(for='balance') Balance
+      .col-sm-10
+        input#balance.form-control-plaintext(type='text' readonly='' value=balance)
+    .form-group.row
+      label.col-sm-2.col-form-label(for='recipient') Recipient
+      .col-sm-10
+        select#recipient.form-control
+          option Choose a Recipient
+          each account in acc
+            option= account
+    .form-group.row
+      label.col-sm-2.col-form-label(for='amount') Amount
+      .col-sm-10
+        input#amount.form-control(type='text' placeholder='Transaction Amount')
+    button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Make Transaction
+
+
+include include/scripts.pug

@@ -53,6 +53,7 @@ app.set('views','./template');
 
 app.use('/static', express.static('public_static'));
 
+// index page
 app.get('/', (req, res) => {
   console.log("**** GET / ****");
   truffle_connect.start(function (accounts) {
@@ -60,6 +61,7 @@ app.get('/', (req, res) => {
   });
 });
 
+// view blog
 app.get('/blog', (req, res) => {
   console.log("**** GET /blog ****");
   var sql = "SELECT * FROM data;"
@@ -78,6 +80,7 @@ app.get('/blog', (req, res) => {
   });
 });
 
+// view post
 app.get('/post.:postid', (req, res) => {
   console.log("**** GET /post ****");
   var post_id = req.params.postid;
@@ -94,6 +97,16 @@ app.get('/post.:postid', (req, res) => {
   });
 });
 
+// view wallet
+app.get('/wallet', (req, res) => {
+  truffle_connect.refreshBalance(curAcc, (balance) => {
+    truffle_connect.start(function(accounts){
+      res.render("wallet", {'nav': "wallet", 'balance': balance, 'acc': accounts, 'curAcc': curAcc});
+    });
+  });
+});
+
+// chooseAccount
 app.get('/chooseAccount.:addr', (req, res) => {
   console.log("**** GET /chooseAccount ****");
   curAcc = req.params.addr;
