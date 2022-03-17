@@ -58,6 +58,7 @@ app.get('/', (req, res) => {
     if (err) throw err;
     result = result.map(function(e) {
       e['user'] = userData.get(e['user_id'].toString())['username'];
+      e['content'] = e['content'].slice(0, 150) + '...';
       e['time'] = e['time'].getFullYear() + '.' + (e['time'].getMonth() + 1) + '.' + e['time'].getDate();
       return e;
     });
