@@ -87,6 +87,14 @@ app.get('/post.:postid', (req, res) => {
   });
 });
 
+app.get('/chooseAccount.:addr', (req, res) => {
+  console.log("**** GET /chooseAccount ****");
+  curAcc = req.params.addr;
+  res.writeHead(301, {
+    Location: "/"
+  }).end();
+});
+
 // database view
 app.get('/database.:address', (req, res) => {
   console.log("**** GET /database ****");
