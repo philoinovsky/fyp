@@ -17,6 +17,8 @@ con.connect(function(err) {
   console.log("Connected!");
 });
 
+var curAcc = "Not Chosen";
+
 const log_and_throw = function(err)
 {
   if (err)
@@ -63,7 +65,9 @@ app.get('/', (req, res) => {
       e['time'] = e['time'].getFullYear() + '.' + (e['time'].getMonth() + 1) + '.' + e['time'].getDate();
       return e;
     });
-    res.render("index", {'posts': result});
+    truffle_connect.start(function (accounts) {
+      res.render("index", {'nav': "blog", 'posts': result, 'acc': accounts, 'curAcc': curAcc});
+    });
   });
 });
 
@@ -77,7 +81,9 @@ app.get('/post.:postid', (req, res) => {
     post['user'] = userData.get(post['user_id'].toString())['username'];
     post['time'] = post['time'].getFullYear() + '.' + (post['time'].getMonth() + 1) + '.' + post['time'].getDate();
     if (err) throw err;
-    res.render("post", {'post': post});
+    truffle_connect.start(function (accounts) {
+      res.render("post", {'nav': "blog", 'post': post, 'acc': accounts, 'curAcc': curAcc});
+    });
   });
 });
 

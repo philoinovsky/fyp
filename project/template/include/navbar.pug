@@ -1,9 +1,29 @@
 nav.navbar.navbar-expand-lg.navbar-light.bg-light
-  a.navbar-brand(href='#') Distributed Storage System (Demo)
+  a.navbar-brand(href='#')
+    b DivSys
   button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
     span.navbar-toggler-icon
+  ul.navbar-nav.mr-auto
+    li.nav-item#blog-nav
+      a.nav-link(href='/')
+        | Blog
+    li.nav-item#wallet-nav
+      a.nav-link(href='/wallet')
+        | Wallet
+    li.nav-item.dropdown
+      a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+        | Accounts
+      .dropdown-menu(aria-labelledby='navbarDropdown')
+        each account in acc
+          a.dropdown-item(href='/chooseAccount.' + account)= account
+        .dropdown-divider
+        a.dropdown-item(href='#') Current Account: 
+          = curAcc
+  
   #navbarSupportedContent.collapse.navbar-collapse
     .navbar-nav.mr-auto
     form.form-inline.my-2.my-lg-0
       input.form-control.mr-sm-2(type='search' placeholder='Search' aria-label='Search')
       button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+script.
+  document.getElementById("#{nav}-nav").classList.add("active");
