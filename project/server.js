@@ -55,6 +55,13 @@ app.use('/static', express.static('public_static'));
 
 app.get('/', (req, res) => {
   console.log("**** GET / ****");
+  truffle_connect.start(function (accounts) {
+    res.render("index", {'nav': "", 'acc': accounts, 'curAcc': curAcc});
+  });
+});
+
+app.get('/blog', (req, res) => {
+  console.log("**** GET /blog ****");
   var sql = "SELECT * FROM data;"
   var userData = getUserDataByID();
   con.query(sql, function (err, result) {
@@ -66,7 +73,7 @@ app.get('/', (req, res) => {
       return e;
     });
     truffle_connect.start(function (accounts) {
-      res.render("index", {'nav': "blog", 'posts': result, 'acc': accounts, 'curAcc': curAcc});
+      res.render("blog", {'nav': "blog", 'posts': result, 'acc': accounts, 'curAcc': curAcc});
     });
   });
 });

@@ -3,31 +3,16 @@ include include/head.pug
 
 .container
   include include/navbar.pug
-  h3 Blog
+  h3 Welcome to Distributed System 
+    i DivSys
   br
   .row
-  - for (var i = 0; i < posts.length; i += 2)
-    .row
-      .col
-        .card.flex-md-row.mb-4.box-shadow.h-md-250
-          .card-body.d-flex.flex-column.align-items-start
-            h3.mb-0
-              a(href= "post." + posts[i].id)
-                = posts[i].title
-            .mb-1.text-muted= posts[i].time
-              i= ' by ' + posts[i].user
-            p.card-text.mb-auto
-              = posts[i].content
-            img(src="static/image/" + posts[i].image width="495" height="400")
-      .col
-        .card.flex-md-row.mb-4.box-shadow.h-md-250
-          .card-body.d-flex.flex-column.align-items-start
-            h3.mb-0
-              a(href= "post." + posts[i+1].id)
-                = posts[i+1].title
-            .mb-1.text-muted= posts[i+1].time
-              i= ' by ' + posts[i+1].user
-            p.card-text.mb-auto
-              = posts[i+1].content
-            img(src="static/image/" + posts[i+1].image width="495" height="400")
+    .col
+        h4 Choose your app
+    .col
+        a(href="blog")
+          button.btn.btn-block.btn-outline-success Blog
+    .col
+        a(href="wallet")
+         button.btn.btn-block.btn-outline-success Wallet
 include include/scripts.pug
