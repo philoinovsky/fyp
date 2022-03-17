@@ -52,6 +52,7 @@ app.set('views','./template');
 app.use('/static', express.static('public_static'));
 
 app.get('/', (req, res) => {
+  console.log("**** GET / ****");
   var sql = "SELECT * FROM data;"
   var userData = getUserDataByID();
   con.query(sql, function (err, result) {
@@ -67,6 +68,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/post.:postid', (req, res) => {
+  console.log("**** GET /post ****");
   var post_id = req.params.postid;
   var sql = "SELECT * FROM data WHERE id = " + post_id + ";";
   var userData = getUserDataByID();
@@ -81,6 +83,7 @@ app.get('/post.:postid', (req, res) => {
 
 // database view
 app.get('/database.:address', (req, res) => {
+  console.log("**** GET /database ****");
   fs.readFile('db/mapping.json', (err, data) => {
     log_and_throw(err);
     let account = JSON.parse(data);
@@ -95,6 +98,7 @@ app.get('/database.:address', (req, res) => {
 
 // database save
 app.post('/database.:address', (req, res) => {
+  console.log("**** POST /database ****");
   fs.readFile('db/mapping.json', (err, data) => {
     log_and_throw(err);
     let account = JSON.parse(data);
